@@ -1,3 +1,5 @@
+This is the Python port of the original code written in NodeJS: https://github.com/rakamoviz/crdjst
+
 0. Have pyenv
 1. Have pyenv-virtualenv https://github.com/pyenv/pyenv-virtualenv installed
 2. pyenv virtualenv 3.7.3 crdjst-py
