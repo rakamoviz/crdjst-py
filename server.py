@@ -5,6 +5,8 @@ from flask import request, jsonify, Response
 from flask_jwt import JWT, jwt_required, current_identity
 from werkzeug.security import safe_str_cmp
 from dateutil.parser import parse as parse_date, ParserError
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 
 class User(object):
   def __init__(self, id, username, password):
@@ -38,6 +40,11 @@ def initialize (core_business, logger):
   app.config['DEBUG'] = True
   app.config['SECRET_KEY'] = os.environ['ACCESS_TOKEN_SECRET']
   jwt = JWT(app, authenticate, identity)
+  limiter = Limiter(
+    app,
+    key_func=get_remote_address,
+    default_limits=["1/5second"],
+  )
 
   @app.route('/rates', methods=['GET'])
   @jwt_required()
